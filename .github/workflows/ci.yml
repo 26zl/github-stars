@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - name: Lint update.sh
+        run: shellcheck update.sh
+      - name: Regenerate README (validates row fields)
+        run: python3 categorize.py
+      - name: README in sync with data (date line exempt)
+        run: git diff -I '^Auto-generated from my' --exit-code -- README.md
