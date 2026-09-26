@@ -19,7 +19,7 @@ jobs:
         run: ./update.sh
         env:
           GH_TOKEN: ${{ github.token }}
-          TZ: Europe/Oslo
+          TZ: UTC
       - name: Commit and push if changed
         run: |
           git config user.name "github-actions[bot]"
